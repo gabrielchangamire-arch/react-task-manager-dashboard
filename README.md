@@ -1,6 +1,6 @@
 # react-task-manager-dashboard
 
-A React front-end for the [AWS Task Manager API](https://github.com/gabrielchangamire-arch/aws-task-manager-api). It's the dashboard half of a small full-stack app: the FastAPI backend handles persistence, S3 attachments, and AWS deployment; this repo is the user-facing UI that consumes it. Built to demonstrate front-end engineering, testing, and integration skills for SDE / QA / Front-End internship interviews.
+A React front-end for the [AWS Task Manager API](https://github.com/gabrielchangamire-arch/aws-task-manager-api). It's the dashboard half of a small full-stack app: the FastAPI backend handles persistence, S3 attachments, and AWS deployment; this repo is the user-facing UI that consumes it. I built it to practice React state, API integration, accessible controls, and front-end tests against a real backend.
 
 ## Project overview
 
@@ -28,17 +28,6 @@ A clean, responsive task manager dashboard. Users can create, edit, complete, an
 - Error banner with **retry** and **dismiss** when the API is down
 - Mobile-responsive layout (single column under 600px)
 - Configurable backend URL via `VITE_API_BASE_URL`
-
-## Screenshots
-
-> _Add screenshots here once you have them. Recommended:_
-> - Empty state on first load
-> - Dashboard with several tasks across statuses
-> - Filter bar showing counts
-> - Error banner when the backend is unreachable
-> - Mobile view
-
-`docs/screenshots/` is the conventional place to drop them.
 
 ## Local setup
 
@@ -92,7 +81,9 @@ The suite has **27 tests across 4 files**:
 - `tests/FilterBar.test.jsx` (2) – aria-pressed correctness, filter change.
 - `tests/api.test.js` (6) – the `tasksApi` service against a mocked axios instance: success cases, network errors, backend detail messages.
 
-## Front-End Skills Demonstrated
+For the QA view of the project, see [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md).
+
+## Front-end notes
 
 - **Component decomposition.** `App` orchestrates state; `TaskForm`, `TaskList`, `TaskItem`, `FilterBar`, `ErrorBanner`, `LoadingSpinner` are each ~50–100 lines and reusable.
 - **State design.** Single `tasks` array as source of truth; computed `visibleTasks` and `counts` via `useMemo`; status changes update state optimistically by replacing the row in place.
@@ -102,7 +93,7 @@ The suite has **27 tests across 4 files**:
 - **API error handling.** All HTTP errors normalize to `Error` with a friendly message; the UI surfaces the message with a retry path; the user can dismiss without state corruption.
 - **Environment-driven config.** Backend URL is `import.meta.env.VITE_API_BASE_URL` so the same build artifact targets dev, staging, and production.
 
-## QA Skills Demonstrated
+## Testing notes
 
 - **Tests as specification.** Each test name reads like a user story: "shows an error banner when the initial load fails", "removes the task from the list after a successful delete".
 - **Multiple test layers.** Unit (FilterBar, TaskForm in isolation), integration (App with mocked service), and service (api.js against mocked axios).
@@ -111,13 +102,13 @@ The suite has **27 tests across 4 files**:
 - **Determinism.** No timers without `vi.useFakeTimers`, no flake-prone selectors. `cleanup()` runs after each test via `tests/setup.js`.
 - **Accessibility selectors.** Tests use `getByRole`, `getByLabelText`, and `findByText` — the same way a screen reader experiences the page — instead of brittle CSS selectors.
 
-## Amazon Internship Relevance
+## Why I built it this way
 
-This project speaks to three different role lanes:
+I wanted this project to cover the parts that usually matter in SDE, QA, and front-end internship conversations without turning it into a toy demo:
 
-- **SDE Internship.** Full-stack thinking: I built the backend, then designed an API contract, then built a UI against it. The error model is consistent, the env-var configuration matches AWS deployment patterns, and the project ships with tests and CI-ready structure.
-- **QA Engineer Internship.** 27 tests across unit and integration boundaries, tests written as user stories, accessibility-first selectors that double as regression protection for screen-reader paths, mocked I/O for deterministic CI runs.
-- **Front-End Engineer Internship.** Hooks, component decomposition, accessibility, responsive design, error UX, optimistic UI, environment-driven config, no framework lock-in.
+- **SDE.** I built the backend first, then treated its API contract as something the UI had to respect. The error model is consistent, configuration is environment-driven, and the project includes tests with a CI-ready structure.
+- **QA.** The 27 tests cover unit and integration boundaries, use accessibility-focused selectors, and mock I/O so the suite can run deterministically.
+- **Front-end.** The app uses hooks, component decomposition, accessibility patterns, responsive CSS, error UX, optimistic UI, and environment-driven config without relying on a large UI framework.
 
 ## Future improvements
 

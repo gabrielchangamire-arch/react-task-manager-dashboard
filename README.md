@@ -29,6 +29,18 @@ A clean, responsive task manager dashboard. Users can create, edit, complete, an
 - Mobile-responsive layout (single column under 600px)
 - Configurable backend URL via `VITE_API_BASE_URL`
 
+## Screenshots
+
+| Dashboard overview | Completed filter |
+|---|---|
+| <img src="docs/screenshots/dashboard-overview.png" alt="Dashboard overview with pending and completed tasks" width="420"> | <img src="docs/screenshots/completed-filter.png" alt="Completed task filter view" width="420"> |
+
+| Empty state | API error state |
+|---|---|
+| <img src="docs/screenshots/empty-state.png" alt="Empty dashboard state" width="420"> | <img src="docs/screenshots/error-state.png" alt="Error banner shown when the API is unreachable" width="420"> |
+
+<img src="docs/screenshots/mobile-layout.png" alt="Mobile layout with stacked task form and task cards" width="260">
+
 ## Local setup
 
 ```bash
